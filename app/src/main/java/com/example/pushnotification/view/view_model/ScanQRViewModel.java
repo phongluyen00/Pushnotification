@@ -48,7 +48,6 @@ public class ScanQRViewModel extends ViewModel {
 
     public void setupViewModel(Context context) {
         appDatabase = AppDatabase.getInMemoryDatabase(context);
-        //Add logging to okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder()
                 .addNetworkInterceptor(new StethoInterceptor())
@@ -58,7 +57,7 @@ public class ScanQRViewModel extends ViewModel {
 
     public void scanProductID(Context context, Product product) {
         ((MainActivity) context).progressLoader(true);
-        AndroidNetworking.post("https://qltsmds.com/truyxuatnguongoc/api/DanhMucSanPham/getData")
+        AndroidNetworking.post(Utils.SCAN_QR)
                 .addBodyParameter(product)
                 .setPriority(Priority.LOW)
                 .build()
@@ -85,14 +84,13 @@ public class ScanQRViewModel extends ViewModel {
                     @Override
                     public void onError(ANError anError) {
                         ((MainActivity) context).progressLoader(false);
-                        Log.d("AAAAAAAAAAAAAAA", anError.toString());
                     }
                 });
     }
 
     public void postComment(Context context, CommentRequest request, onPostCommentListener listener) {
         ((DetailQRScan) context).progressLoader(true);
-        AndroidNetworking.post("https://qltsmds.com/truyxuatnguongoc/api/DanhGiaSanPham/Save")
+        AndroidNetworking.post(Utils.POST_COMMENT)
                 .addBodyParameter(request)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -114,7 +112,7 @@ public class ScanQRViewModel extends ViewModel {
 
     public void getComment(Context context, Product product, onDataListener listener) {
         ((DetailQRScan) context).progressLoader(true);
-        AndroidNetworking.post("https://qltsmds.com/truyxuatnguongoc/api/DanhGiaSanPham/getListData")
+        AndroidNetworking.post(Utils.GET_ALL_COMMENT)
                 .addBodyParameter(product)
                 .setPriority(Priority.MEDIUM)
                 .build()

@@ -149,11 +149,8 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
                 .setTag("test")
                 .setPriority(Priority.HIGH)
                 .build()
-                .setUploadProgressListener(new UploadProgressListener() {
-                    @Override
-                    public void onProgress(long bytesUploaded, long totalBytes) {
-                        // do anything with progress
-                    }
+                .setUploadProgressListener((bytesUploaded, totalBytes) -> {
+                    // do anything with progress
                 })
                 .getAsString(new StringRequestListener() {
                     @Override

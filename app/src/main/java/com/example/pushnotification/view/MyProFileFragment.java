@@ -2,14 +2,12 @@ package com.example.pushnotification.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -23,6 +21,8 @@ import com.example.pushnotification.base.BaseFragment;
 import com.example.pushnotification.base.Utils;
 import com.example.pushnotification.databinding.MyProfileFragmentBinding;
 import com.example.pushnotification.manager.LoginAndRegisterViewModel;
+
+import java.util.Objects;
 
 public class MyProFileFragment extends BaseFragment<MyProfileFragmentBinding> {
 
@@ -50,55 +50,40 @@ public class MyProFileFragment extends BaseFragment<MyProfileFragmentBinding> {
         }
         viewModel.setUpFirebase();
 
-        binding.tVUpdateEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.addFragmentToBackStack(fragmentManager.beginTransaction(),
-                        HistoryScanQRFragment.newInstance(context), HistoryScanQRFragment.class.getSimpleName());
-            }
-        });
+        binding.tVUpdateEmail.setOnClickListener(v -> Utils.addFragmentToBackStack(fragmentManager.beginTransaction(),
+                HistoryScanQRFragment.newInstance(context), HistoryScanQRFragment.class.getSimpleName()));
 
         binding.logOut.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setMessage("Bạn có muốn đăng xuất không")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Utils.replaceFragment(fragmentManager.beginTransaction(),
-                                    LoginFragment.newInstance(context));
-                            viewModel.signOut();
-                        }
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        Utils.replaceFragment(fragmentManager.beginTransaction(),
+                                LoginFragment.newInstance(context));
+                        viewModel.signOut();
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         });
 
-        binding.tVUpdatePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.alert_label_editor, null);
-                dialogBuilder.setView(dialogView);
+        binding.tVUpdatePassword.setOnClickListener(v -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.alert_label_editor, null);
+            dialogBuilder.setView(dialogView);
 
-                AppCompatTextView appCompatTextView = (AppCompatTextView) dialogView.findViewById(R.id.submit);
-                AppCompatEditText edtPasswordNew = (AppCompatEditText) dialogView.findViewById(R.id.password_new);
-                appCompatTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        firebaseUser.updatePassword(edtPasswordNew.getText().toString().trim()).addOnCompleteListener(task -> {
-                            if (task.isSuccessful()){
-                                Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-                AlertDialog alertDialog = dialogBuilder.create();
-                Window window = alertDialog.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                window.setGravity(Gravity.BOTTOM);
-                alertDialog.show();
-            }
+            AppCompatTextView appCompatTextView = dialogView.findViewById(R.id.submit);
+            AppCompatEditText edtPasswordNew = dialogView.findViewById(R.id.password_new);
+            appCompatTextView.setOnClickListener(v1 -> firebaseUser.updatePassword(Objects.requireNonNull(edtPasswordNew.getText()).toString().trim()).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
+                }
+            }));
+            AlertDialog alertDialog = dialogBuilder.create();
+            Window window = alertDialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.BOTTOM);
+            alertDialog.show();
         });
     }
 

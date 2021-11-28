@@ -2,15 +2,12 @@ package com.example.pushnotification.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
 import com.example.pushnotification.R;
 import com.example.pushnotification.activity.DetailQRScan;
 import com.example.pushnotification.activity.MainActivity;

@@ -22,10 +22,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     private List<MessageResponse.Value> messageResponseList;
     private LayoutInflater inflater;
 
-    public void setMessageResponseList(ArrayList<MessageResponse.Value> messageResponseList) {
-        this.messageResponseList = messageResponseList;
-    }
-
     public CommentAdapter(Context context, List<MessageResponse.Value> messageResponseList) {
         this.context = context;
         this.messageResponseList = messageResponseList;
@@ -43,11 +39,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     public void onBindViewHolder(@NonNull CommentHolder holder, int position) {
         MessageResponse.Value messageResponse = messageResponseList.get(position);
         holder.bind(messageResponse);
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.view.setOnClickListener(v -> {
 
-            }
         });
     }
 

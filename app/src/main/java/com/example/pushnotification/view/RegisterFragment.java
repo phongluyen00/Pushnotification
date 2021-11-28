@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pushnotification.R;
@@ -21,7 +20,6 @@ import com.example.pushnotification.base.Utils;
 import com.example.pushnotification.databinding.FragmentLoginBinding;
 import com.example.pushnotification.manager.LoginAndRegisterViewModel;
 import com.example.pushnotification.model.User;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 

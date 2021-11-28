@@ -119,6 +119,9 @@ public class Product implements Parcelable {
     }
 
     public String getProductId() {
+        if (productId == null) {
+            productId = "";
+        }
         return productId;
     }
 

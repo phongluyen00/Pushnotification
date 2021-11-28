@@ -1,9 +1,7 @@
 package com.example.pushnotification.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -15,7 +13,6 @@ import com.example.pushnotification.base.BaseActivity;
 import com.example.pushnotification.base.Utils;
 import com.example.pushnotification.databinding.ActivityMainBinding;
 import com.example.pushnotification.model.Product;
-import com.example.pushnotification.view.ContributeFragment;
 import com.example.pushnotification.view.HistoryScanQRFragment;
 import com.example.pushnotification.view.HomeViewFragment;
 import com.example.pushnotification.view.LoginFragment;
@@ -24,9 +21,6 @@ import com.example.pushnotification.view.RegisterFragment;
 import com.example.pushnotification.view.view_model.ScanQRViewModel;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.io.ByteArrayOutputStream;
-import java.util.PropertyPermission;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -53,13 +47,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         binding.login.setOnClickListener(v -> Utils.replaceFragment(fragmentManager.beginTransaction(),
                 loginFragment));
 
-        binding.qrCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.replaceFragment(fragmentManager.beginTransaction(),
-                        homeViewFragment);
-            }
-        });
+        binding.qrCode.setOnClickListener(v -> Utils.replaceFragment(fragmentManager.beginTransaction(),
+                homeViewFragment));
 
         binding.profile.setOnClickListener(v -> {
             Utils.replaceFragment(fragmentManager.beginTransaction(),
