@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="account"
+            type="com.example.pushnotification.model.User" />
+    </data>
+
+    <RelativeLayout
+        android:background="@color/black"
+        android:id="@+id/rootView"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/qr_scaner_new" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:hint="Tên người dùng"
+            android:layout_below="@+id/img"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            tools:visibility="visible"
+            android:background="@drawable/botron_button"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:text="@{account.username}"
+            android:textSize="13sp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/botron_button"
+            android:hint="Email"
+            android:textColorHint="@android:color/white"
+            android:padding="10dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@android:color/white"
+            android:layout_below="@id/edt_username"
+            android:layout_margin="10dp"
+            android:text="@{account.password}"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/botron_button"
+            android:hint="Password"
+            android:padding="10dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/view_login"
+            android:layout_width="wrap_content"
+            android:textSize="13sp"
+            android:padding="10dp"
+            android:textColor="@color/colorDefault"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/edt_password"
+            android:text="Bạn chưa có tài khoản, Đăng kí ngay?"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/submit"
+            android:textStyle="bold"
+            android:textColor="@color/colorDefault"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/botron_button"
+            android:text="Đăng Nhập" />
+    </RelativeLayout>
+</layout>

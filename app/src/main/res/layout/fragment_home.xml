@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#000000"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/qr_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/botron_button"
+                android:gravity="center"
+                android:hint="Nhập mã"
+                android:text="123456789"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/qr_id"
+                android:layout_alignEnd="@+id/qr_id"
+                android:layout_alignBottom="@+id/qr_id"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_search_24" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/scan_qr"
+                android:layout_width="135dp"
+                android:layout_below="@+id/qr_id"
+                android:layout_height="135dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:padding="20dp"
+                app:srcCompat="@drawable/qr_bard" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flash"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_below="@+id/scan_qr"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/flash"
+                android:tint="@color/teal_200" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flash"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="Bật flash để quyest tốt hơn"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
+    </ScrollView>
+</layout>

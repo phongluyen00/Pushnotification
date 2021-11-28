@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:padding="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_info"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_baseline_account_circle_24"
+        app:civ_border_width="0.5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Luyện Thanh Phong"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/img_info"
+        app:layout_constraintTop_toTopOf="@id/img_info" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/messageResponse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingEnd="10dp"
+        android:textColor="#00BCD4"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        tools:text="Sản phẩm như bìu v" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12/11/2021"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/messageResponse" />
+
+    <RatingBar
+        android:id="@+id/ratingBar21"
+        style="@android:style/Widget.Holo.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:rating="3"
+        android:clickable="false"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:stepSize="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time" />
+
+    <View
+        android:id="@+id/enabled"
+        android:saveEnabled="false"
+        app:layout_constraintTop_toTopOf="@id/ratingBar21"
+        app:layout_constraintBottom_toBottomOf="@id/ratingBar21"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#626263"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar21" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

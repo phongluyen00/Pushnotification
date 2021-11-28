@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_avata"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="10dp"
+        android:src="@drawable/qr_bard" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/id"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/img_avata"
+        android:src="@drawable/bard_core" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/id"
+        android:layout_alignBottom="@+id/id"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/id"
+        android:gravity="center"
+        android:text="[ 565656565656 ]"
+        android:textColor="@android:color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgtime"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignBottom="@id/img_avata"
+        android:layout_marginLeft="9dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toRightOf="@id/img_avata"
+        android:src="@drawable/ic_baseline_access_time_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_time"
+        android:textColor="@android:color/white"
+        android:layout_alignTop="@+id/imgtime"
+        android:layout_alignBottom="@+id/imgtime"
+        android:text="1545454"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/imgtime" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/img_avata"
+        android:background="#48484A" />
+
+</RelativeLayout>
