@@ -122,14 +122,18 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         }
         String imagepath = Utils.getRealPathFromURI(uriImage, (MainActivity) context);
         if (imagepath == null) {
-            Toast.makeText(context, "Lỗi file ảnh", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Ko tìm thấy đường dẫn ảnh, Vui lòng chọn ảnh khác !", Toast.LENGTH_SHORT).show();
             return;
         }
         File file = new File(imagepath);
+        viewModel.postContribute(context, fragmentManager, file, stringStringMap());
+    }
+
+    private Map<String, String> stringStringMap(){
         Map<String, String> map = new HashMap<>();
         map.put("MaSanPham", binding.productId.getText().toString());
-        map.put("TenSanPham", "Sản Phẩm tét");
-        map.put("LoaiSanPhamId", "1900");
+        map.put("TenSanPham", binding.tvName.getText().toString());
+        map.put("LoaiSanPhamId", binding.tvLoaisp.getText().toString());
         map.put("TenDoanhNghiep", binding.tvDn.getText().toString());
         map.put("DiaChi", binding.tvDiachi.getText().toString());
         map.put("SoDienThoai", binding.tvPhone.getText().toString());
@@ -142,31 +146,7 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         map.put("MoTa", binding.tVMota.getText().toString());
         map.put("CreatedDate", binding.tvCreateDate.getText().toString());
         map.put("CreatedBy", binding.createBy.getText().toString());
-        ((MainActivity) context).progressLoader(true);
-        AndroidNetworking.upload("http://68.183.226.200:3000/api/swu86/post")
-                .addMultipartFile("file", file)
-                .addMultipartParameter(map)
-                .setTag("test")
-                .setPriority(Priority.HIGH)
-                .build()
-                .setUploadProgressListener((bytesUploaded, totalBytes) -> {
-                    // do anything with progress
-                })
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        ((MainActivity) context).progressLoader(false);
-                        Toast.makeText(context, "Tải lên thành công", Toast.LENGTH_SHORT).show();
-                        Utils.hideKeyboard((MainActivity) context);
-                        fragmentManager.popBackStackImmediate();
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        ((MainActivity) context).progressLoader(false);
-                        Toast.makeText(context, "Tải lên lỗi", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        return map;
     }
 
     @Override

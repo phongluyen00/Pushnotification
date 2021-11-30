@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,6 +17,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.pushnotification.activity.DetailQRScan;
 import com.example.pushnotification.activity.MainActivity;
 import com.example.pushnotification.base.Utils;
@@ -31,10 +33,12 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -55,10 +59,10 @@ public class ScanQRViewModel extends ViewModel {
         AndroidNetworking.initialize(context, okHttpClient);
     }
 
-    public void scanProductID(Context context, Product product) {
+    public void scanProductID(Context context, Product productS) {
         ((MainActivity) context).progressLoader(true);
         AndroidNetworking.post(Utils.SCAN_QR)
-                .addBodyParameter(product)
+                .addBodyParameter(productS)
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -71,7 +75,7 @@ public class ScanQRViewModel extends ViewModel {
                                     Toast.LENGTH_SHORT).show();
                             new Handler().postDelayed(() -> {
                                 Utils.addFragmentToBackStack(((MainActivity) context).getSupportFragmentManager().beginTransaction()
-                                        , ContributeFragment.newInstance(context,product), ContributeFragment.class.getSimpleName());
+                                        , ContributeFragment.newInstance(context,productS), ContributeFragment.class.getSimpleName());
                             }, 1000);
                         } else {
                             Intent intent = new Intent(new Intent(context, DetailQRScan.class));
@@ -132,24 +136,30 @@ public class ScanQRViewModel extends ViewModel {
                 });
     }
 
-    public void postContribute(Context context, ContributeRequest contributeRequest) {
-        ((DetailQRScan) context).progressLoader(true);
-        AndroidNetworking.post("https://qltsmds.com/truyxuatnguongoc/api/DongGopSanPham/Save")
-                .addBodyParameter(contributeRequest)
-                .setPriority(Priority.MEDIUM)
+    public void postContribute(Context context, FragmentManager fragmentManager,  File file, Map<String,String> map) {
+        ((MainActivity) context).progressLoader(true);
+        AndroidNetworking.upload("https://qltsmds.com/truyxuatnguongoc/api/DongGopSanPham/Upload")
+                .addMultipartFile("file", file)
+                .addMultipartParameter(map)
+                .setTag("test")
+                .setPriority(Priority.HIGH)
                 .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .setUploadProgressListener((bytesUploaded, totalBytes) -> {
+                    // do anything with progress
+                })
+                .getAsString(new StringRequestListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        ((DetailQRScan) context).progressLoader(false);
-                        MessageResponse messageResponse = new Gson().fromJson(response.toString(), MessageResponse.class);
-//                        listener.onLoadCommentDone(messageResponse);
+                    public void onResponse(String response) {
+                        ((MainActivity) context).progressLoader(false);
+                        Toast.makeText(context, "Tải lên thành công", Toast.LENGTH_SHORT).show();
+                        Utils.hideKeyboard((MainActivity) context);
+                        fragmentManager.popBackStackImmediate();
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        ((DetailQRScan) context).progressLoader(false);
-                        Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show();
+                        ((MainActivity) context).progressLoader(false);
+                        Toast.makeText(context, "Tải lên lỗi", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -179,9 +189,41 @@ public class ScanQRViewModel extends ViewModel {
                 });
     }
 
-    public void updateImage(Uri uriImage){
+    public void updateImage(Context context, Uri uriImage){
+//        upload(context, uriImage);
         uriMutableLiveData.postValue(uriImage);
     }
+
+//    public void upload(Context context, Uri uriImage){
+//        String imagepath = Utils.getRealPathFromURI(uriImage, (MainActivity) context);
+//        if (imagepath == null) {
+//            Toast.makeText(context, "Lỗi file ảnh", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        File file = new File(imagepath);
+//        AndroidNetworking.upload("https://qltsmds.com/truyxuatnguongoc/api/DongGopSanPham/Upload")
+//                .addMultipartFile("file", file)
+//                .setTag("test")
+//                .setPriority(Priority.HIGH)
+//                .build()
+//                .setUploadProgressListener((bytesUploaded, totalBytes) -> {
+//                    // do anything with progress
+//                })
+//                .getAsString(new StringRequestListener() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        ((MainActivity) context).progressLoader(false);
+//                        Log.d("AAAAAAAAAAA", response);
+//                        Toast.makeText(context, "Tải lên thành công", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError anError) {
+//                        ((MainActivity) context).progressLoader(false);
+//                        Toast.makeText(context, "Tải lên lỗi", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
     public MutableLiveData<Uri> getBitmapMutableLiveData() {
         return uriMutableLiveData;

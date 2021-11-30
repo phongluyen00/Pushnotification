@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     assert data != null;
                     Uri uri = data.getData();
                     if (uri != null) {
-                        viewModel.updateImage(uri);
+                        viewModel.updateImage(this,uri);
                     }
                 }
             }

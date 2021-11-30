@@ -58,7 +58,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="190dp"
                 android:layout_below="@+id/img_back"
                 android:src="@drawable/bg"
                 android:layout_marginTop="5dp"
@@ -88,10 +88,7 @@
                     android:id="@+id/label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/view"
-                    android:layout_alignTop="@id/view"
-                    android:layout_alignEnd="@id/view"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="-10dp"
                     android:gravity="center_horizontal"
                     android:text="Mã vạch định dạng chuẩn"
                     android:textColor="@android:color/white" />
@@ -100,9 +97,6 @@
                     android:id="@+id/label1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/label"
-                    android:layout_alignStart="@+id/view"
-                    android:layout_alignEnd="@id/view"
                     android:layout_marginTop="3dp"
                     android:gravity="center_horizontal"
                     android:text="Tra cứu thành công"
@@ -110,13 +104,9 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/view"
-                    android:layout_alignEnd="@id/view"
-                    android:layout_alignBottom="@id/view"
                     android:layout_marginTop="3dp"
                     android:gravity="center_horizontal"
                     android:text="@{`Ngày Sản xuất :` + item.ngaySanXuat}"
@@ -126,26 +116,22 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/view"
-                    android:layout_alignEnd="@id/view"
-                    android:layout_alignBottom="@id/view"
                     android:layout_marginTop="3dp"
                     android:gravity="center_horizontal"
                     android:text="@{`Hạn sử dụng : ` + item.hanSuDung}"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <RatingBar
+                    android:id="@+id/rate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/view"
-                    android:layout_alignEnd="@id/view"
-                    android:layout_alignBottom="@id/view"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center_horizontal"
-                    android:text="Mời liên hệ : 19008198"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp" />
+                    android:layout_height="40dp"
+                    android:numStars="5"
+                    android:scaleX=".3"
+                    android:rating="@{Float.parseFloat(item.rate)}"
+                    android:scaleY=".3"
+                    android:stepSize="0.01" />
+
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView

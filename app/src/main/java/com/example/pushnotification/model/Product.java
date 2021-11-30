@@ -42,6 +42,15 @@ public class Product implements Parcelable {
     @ColumnInfo(name = "timeSave")
     private String timeSave;
     private String message;
+    private String rate;
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getRate() {
+        return rate;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -96,6 +105,7 @@ public class Product implements Parcelable {
         NgaySanXuat = in.readString();
         HanSuDung = in.readString();
         timeSave = in.readString();
+        rate = in.readString();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -240,5 +250,6 @@ public class Product implements Parcelable {
         dest.writeString(NgaySanXuat);
         dest.writeString(HanSuDung);
         dest.writeString(timeSave);
+        dest.writeString(rate);
     }
 }
