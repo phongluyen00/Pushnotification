@@ -26,6 +26,9 @@ public class CommentRequest {
     @Expose
     private String c1;
 
+    public CommentRequest() {
+    }
+
     public CommentRequest(String nguoiDanhGia, String soDiem, String noiDungDonGia, String maSanPham, String statusId, String createdBy, String c1) {
         this.nguoiDanhGia = nguoiDanhGia;
         this.soDiem = soDiem;

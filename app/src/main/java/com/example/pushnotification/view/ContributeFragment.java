@@ -2,6 +2,7 @@ package com.example.pushnotification.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,7 +33,10 @@ import com.example.pushnotification.view.view_model.ScanQRViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> {
@@ -42,7 +47,6 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
     private Uri uriFile = null;
 
     public static ContributeFragment newInstance(Context context, Product product) {
-
         Bundle args = new Bundle();
         ContributeFragment fragment = new ContributeFragment();
         fragment.context = context;
@@ -63,6 +67,7 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         });
     }
 
+    @SuppressLint("CheckResult")
     @Override
     protected void initFragment(View view) {
         AndroidNetworking.initialize(context);
@@ -75,27 +80,45 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
             fragmentManager.popBackStackImmediate();
         });
 
+        binding.c1.setOnClickListener(v -> {
+            final Calendar newCalendar = Calendar.getInstance();
+            final DatePickerDialog StartTime = new DatePickerDialog(context, (view1, year, monthOfYear, dayOfMonth) -> {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                binding.c1.setText(dateFormatter.format(newDate.getTime()));
+            }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+            StartTime.show();
+        });
+
+        binding.c2.setOnClickListener(v -> {
+            final Calendar newCalendar = Calendar.getInstance();
+            final DatePickerDialog StartTime = new DatePickerDialog(context, (view1, year, monthOfYear, dayOfMonth) -> {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                binding.c2.setText(dateFormatter.format(newDate.getTime()));
+            }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+            StartTime.show();
+        });
+
         binding.submit.setOnClickListener(v -> {
             updateImage(uriFile);
         });
 
-        binding.img.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("CheckResult")
-            @Override
-            public void onClick(View v) {
+        binding.img.setOnClickListener(v -> {
 
-                final RxPermissions rxPermissions = new RxPermissions((MainActivity) context); // where this is an Activity or Fragment instance
-                rxPermissions
-                        .request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .subscribe(granted -> {
-                            if (granted) { // Always true pre-M
-                                Intent intent = new Intent();
-                                intent.setType("image/*");
-                                intent.setAction(Intent.ACTION_PICK);
-                                ((MainActivity) context).startActivityForResult(intent, 200);
-                            }
-                        });
-            }
+            final RxPermissions rxPermissions = new RxPermissions((MainActivity) context); // where this is an Activity or Fragment instance
+            rxPermissions
+                    .request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .subscribe(granted -> {
+                        if (granted) { // Always true pre-M
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_PICK);
+                            ((MainActivity) context).startActivityForResult(intent, 200);
+                        }
+                    });
         });
     }
 
@@ -104,7 +127,8 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
                 TextUtils.isEmpty(input(binding.tvLoaisp)) || TextUtils.isEmpty(input(binding.tvDn)) ||
                 TextUtils.isEmpty(input(binding.tvDiachi)) || TextUtils.isEmpty(input(binding.tvPhone)) ||
                 TextUtils.isEmpty(input(binding.tvEmail)) || TextUtils.isEmpty(input(binding.tvMathue)) ||
-                TextUtils.isEmpty(input(binding.c1)) || TextUtils.isEmpty(input(binding.c2)) || TextUtils.isEmpty(input(binding.tvGia)) ||
+                TextUtils.isEmpty((binding.c1.getText().toString())) || TextUtils.isEmpty((binding.c2.getText().toString()))
+                || TextUtils.isEmpty(input(binding.tvGia)) ||
                 TextUtils.isEmpty(input(binding.tvTrongluong)) || TextUtils.isEmpty(input(binding.tVMota)) ||
                 TextUtils.isEmpty(input(binding.tvCreateDate)) || TextUtils.isEmpty(input(binding.createBy)))
             return false;

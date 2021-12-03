@@ -1,13 +1,20 @@
 package com.example.pushnotification.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -83,6 +90,32 @@ public class DetailQRScan extends BaseActivity<ActivityDetailBinding> {
                         Toast.makeText(DetailQRScan.this, comment1.getMessage(), Toast.LENGTH_SHORT).show();
                         adapter.notifyDataSetChanged();
                     });
+        });
+
+        binding.waring.setOnClickListener(v -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.layout_report, null);
+            dialogBuilder.setView(dialogView);
+            AlertDialog alertDialog = dialogBuilder.create();
+
+            AppCompatEditText appCompatEditText = dialogView.findViewById(R.id.report);
+            AppCompatTextView appCompatTextView = dialogView.findViewById(R.id.submit);
+            appCompatTextView.setOnClickListener(v1 -> {
+                if (TextUtils.isEmpty(appCompatEditText.getText().toString())) {
+                    Toast.makeText(this, "Nhập nội dung trước khi report", Toast.LENGTH_SHORT).show();
+                } else {
+                    alertDialog.dismiss();
+                    viewModel.postComment(DetailQRScan.this, new CommentRequest(firebaseUser.getEmail(), String.valueOf(binding.ratingBar21.getRating()),
+                            appCompatEditText.getText().toString().trim(), product.getProductId(), "1", date, "report"), comment1 -> {
+                        Toast.makeText(DetailQRScan.this, comment1.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            });
+            Window window = alertDialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.CENTER);
+            alertDialog.show();
         });
     }
 

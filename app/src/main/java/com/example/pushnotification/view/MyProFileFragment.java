@@ -71,6 +71,7 @@ public class MyProFileFragment extends BaseFragment<MyProfileFragmentBinding> {
             LayoutInflater inflater = getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.alert_label_editor, null);
             dialogBuilder.setView(dialogView);
+            AlertDialog alertDialog = dialogBuilder.create();
 
             AppCompatTextView appCompatTextView = dialogView.findViewById(R.id.submit);
             AppCompatEditText edtPasswordNew = dialogView.findViewById(R.id.password_new);
@@ -78,11 +79,11 @@ public class MyProFileFragment extends BaseFragment<MyProfileFragmentBinding> {
                 if (task.isSuccessful()){
                     Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
                 }
+                alertDialog.dismiss();
             }));
-            AlertDialog alertDialog = dialogBuilder.create();
             Window window = alertDialog.getWindow();
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            window.setGravity(Gravity.BOTTOM);
+            window.setGravity(Gravity.CENTER);
             alertDialog.show();
         });
     }

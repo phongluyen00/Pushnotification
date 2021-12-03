@@ -139,26 +139,26 @@
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/c1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
-                    android:hint="C1"
+                    android:text="C1"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/c2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
-                    android:hint="C2"
+                    android:text="C2"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />

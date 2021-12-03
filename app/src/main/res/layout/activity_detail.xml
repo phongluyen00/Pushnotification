@@ -60,29 +60,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:layout_below="@+id/img_back"
-                android:src="@drawable/bg"
                 android:layout_marginTop="5dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg" />
 
             <LinearLayout
                 android:id="@+id/ll_detail"
-                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_margin="25dp"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/img"
                 android:layout_alignTop="@+id/img"
                 android:layout_alignEnd="@id/img"
                 android:layout_alignBottom="@+id/img"
+                android:layout_margin="25dp"
                 android:background="#C6474141"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
                     android:id="@+id/closeview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:src="@drawable/ic_baseline_close_24"
-                    android:layout_height="wrap_content"/>
+                    android:src="@drawable/ic_baseline_close_24" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label"
@@ -127,8 +127,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:numStars="5"
-                    android:scaleX=".3"
                     android:rating="@{Float.parseFloat(item.rate)}"
+                    android:scaleX=".3"
                     android:scaleY=".3"
                     android:stepSize="0.01" />
 
@@ -136,10 +136,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@id/info"
                 android:text="@{item.productName}"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
@@ -147,20 +149,32 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/info"
-                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/tv_name"
                 android:layout_alignBottom="@+id/tv_name"
+                android:layout_alignParentRight="true"
+                android:padding="1dp"
+                android:src="@drawable/ic_baseline_info_24" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/waring"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/img_back"
+                android:layout_alignBottom="@+id/img_back"
                 android:padding="3dp"
-                android:src="@drawable/ic_baseline_info_24"
-                android:layout_height="wrap_content"/>
+                android:src="@drawable/ic_baseline_warning_24" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_money"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="3dp"
+                android:layout_toLeftOf="@id/info"
                 android:text="@{`Gía tham khảo: ` + item.money + `VNĐ`}"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
