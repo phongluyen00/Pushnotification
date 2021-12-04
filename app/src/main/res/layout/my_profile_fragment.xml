@@ -86,7 +86,6 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/tV_update_email"
                 android:layout_alignBottom="@+id/tV_update_email"
                 android:layout_alignParentRight="true"
                 android:layout_centerHorizontal="true"
@@ -99,7 +98,6 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/tV_update_password"
                 android:layout_alignBottom="@+id/tV_update_password"
                 android:layout_alignParentRight="true"
                 android:tint="#FFFFFF"
@@ -116,7 +114,7 @@
                 android:layout_marginTop="5dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:padding="14dp"
-                android:text="Lịch sử quyét"
+                android:text="Lịch sử quét"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 

@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         binding.home.setOnClickListener(v -> {
             Utils.replaceFragment(fragmentManager.beginTransaction(),
                     homeViewFragment);
-            binding.title.setText("Quyét QR");
+            binding.title.setText("Quét QR");
         });
 
         binding.login.setVisibility(firebaseUser == null ? View.VISIBLE : View.GONE);
@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     Intent myActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getContents()));
                     startActivity(myActivity);
                 } else {
-                    viewModel.scanProductID(this, new Product(result.getContents()));
+                    viewModel.scanProductID(this,getSupportFragmentManager(), new Product(result.getContents()));
                 }
             }
         } else {
@@ -126,6 +126,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     public void showViewLoginAndScanQR(int visibility) {
         binding.qrCode.setVisibility(visibility);
+        binding.history.setVisibility(visibility);
         binding.login.setVisibility(visibility);
     }
 }

@@ -42,12 +42,13 @@ public class DetailQRScan extends BaseActivity<ActivityDetailBinding> {
     private ScanQRViewModel viewModel;
     private List<MessageResponse.Value> commentList = new ArrayList<>();
     Date currentTime = Calendar.getInstance().getTime();
+    String date;
 
     @Override
     protected void initView() {
         String pattern = "yyyy-MM-dd hh:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(currentTime);
+        date = simpleDateFormat.format(currentTime);
         setupUI(binding.rootView);
         viewModel = new ViewModelProvider(this).get(ScanQRViewModel.class);
         product = getIntent().getParcelableExtra("product");
@@ -82,7 +83,7 @@ public class DetailQRScan extends BaseActivity<ActivityDetailBinding> {
                     new CommentRequest(firebaseUser.getEmail(),
                             String.valueOf(binding.ratingBar21.getRating()),
                             comment, product.getProductId(), "1",
-                            firebaseUser.getDisplayName(), date), comment1 -> {
+                            firebaseUser.getEmail(), date, ""), comment1 -> {
                         commentList.add(new MessageResponse.Value(firebaseUser.getDisplayName(),
                                 comment,
                                 String.valueOf(binding.ratingBar21.getRating()),date));
@@ -107,7 +108,7 @@ public class DetailQRScan extends BaseActivity<ActivityDetailBinding> {
                 } else {
                     alertDialog.dismiss();
                     viewModel.postComment(DetailQRScan.this, new CommentRequest(firebaseUser.getEmail(), String.valueOf(binding.ratingBar21.getRating()),
-                            appCompatEditText.getText().toString().trim(), product.getProductId(), "1", date, "report"), comment1 -> {
+                            appCompatEditText.getText().toString().trim(), product.getProductId(), "1", firebaseUser.getEmail(), date, "report"), comment1 -> {
                         Toast.makeText(DetailQRScan.this, comment1.getMessage(), Toast.LENGTH_SHORT).show();
                     });
                 }

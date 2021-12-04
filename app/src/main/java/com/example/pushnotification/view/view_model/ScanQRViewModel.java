@@ -1,14 +1,23 @@
 package com.example.pushnotification.view.view_model;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,6 +27,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.pushnotification.R;
 import com.example.pushnotification.activity.DetailQRScan;
 import com.example.pushnotification.activity.MainActivity;
 import com.example.pushnotification.base.Utils;
@@ -28,7 +38,10 @@ import com.example.pushnotification.model.ContributeRequest;
 import com.example.pushnotification.model.MessageResponse;
 import com.example.pushnotification.model.Product;
 import com.example.pushnotification.view.ContributeFragment;
+import com.example.pushnotification.view.LoginFragment;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -49,6 +62,7 @@ public class ScanQRViewModel extends ViewModel {
     private AppDatabase appDatabase;
     private MutableLiveData<List<Product>> listMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Uri> uriMutableLiveData = new MutableLiveData<>();
+    private FirebaseUser firebaseUser;
 
     public void setupViewModel(Context context) {
         appDatabase = AppDatabase.getInMemoryDatabase(context);
@@ -57,9 +71,10 @@ public class ScanQRViewModel extends ViewModel {
                 .addNetworkInterceptor(new StethoInterceptor())
                 .build();
         AndroidNetworking.initialize(context, okHttpClient);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    public void scanProductID(Context context, Product productS) {
+    public void scanProductID(Context context, FragmentManager fragmentManager, Product productS) {
         ((MainActivity) context).progressLoader(true);
         AndroidNetworking.post(Utils.SCAN_QR)
                 .addBodyParameter(productS)
@@ -71,12 +86,31 @@ public class ScanQRViewModel extends ViewModel {
                         ((MainActivity) context).progressLoader(false);
                         Product product = new Gson().fromJson(response.toString(), Product.class);
                         if (!product.isSuccess()) {
-                            Toast.makeText(context, product.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            new Handler().postDelayed(() -> {
-                                Utils.addFragmentToBackStack(((MainActivity) context).getSupportFragmentManager().beginTransaction()
-                                        , ContributeFragment.newInstance(context,productS), ContributeFragment.class.getSimpleName());
-                            }, 1000);
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                            LayoutInflater inflater = ((MainActivity) context).getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.layout_donggop, null);
+                            dialogBuilder.setView(dialogView);
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            AppCompatTextView tvMessage = dialogView.findViewById(R.id.message);
+                            tvMessage.setText(product.getMessage());
+                            AppCompatTextView submit = dialogView.findViewById(R.id.submit);
+                            AppCompatTextView cancel = dialogView.findViewById(R.id.cancel);
+                            submit.setOnClickListener(v1 -> {
+                                if (firebaseUser != null) {
+                                    new Handler().postDelayed(() -> {
+                                        Utils.addFragmentToBackStack(((MainActivity) context).getSupportFragmentManager().beginTransaction()
+                                                , ContributeFragment.newInstance(context, productS), ContributeFragment.class.getSimpleName());
+                                    }, 200);
+                                }else {
+                                    Utils.replaceFragment(fragmentManager.beginTransaction(), LoginFragment.newInstance(context));
+                                }
+                                alertDialog.dismiss();
+                            });
+                            cancel.setOnClickListener(v -> alertDialog.dismiss());
+                            Window window = alertDialog.getWindow();
+                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                            window.setGravity(Gravity.CENTER);
+                            alertDialog.show();
                         } else {
                             Intent intent = new Intent(new Intent(context, DetailQRScan.class));
                             intent.putExtra("product", product);
@@ -136,7 +170,7 @@ public class ScanQRViewModel extends ViewModel {
                 });
     }
 
-    public void postContribute(Context context, FragmentManager fragmentManager,  File file, Map<String,String> map) {
+    public void postContribute(Context context, FragmentManager fragmentManager, File file, Map<String, String> map) {
         ((MainActivity) context).progressLoader(true);
         AndroidNetworking.upload("https://qltsmds.com/truyxuatnguongoc/api/DongGopSanPham/Upload")
                 .addMultipartFile("file", file)
@@ -189,7 +223,7 @@ public class ScanQRViewModel extends ViewModel {
                 });
     }
 
-    public void updateImage(Context context, Uri uriImage){
+    public void updateImage(Context context, Uri uriImage) {
 //        upload(context, uriImage);
         uriMutableLiveData.postValue(uriImage);
     }

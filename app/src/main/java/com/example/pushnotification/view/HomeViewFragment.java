@@ -54,8 +54,8 @@ public class HomeViewFragment extends BaseFragment<FragmentHomeBinding> {
         viewModel = new ViewModelProvider(this).get(ScanQRViewModel.class);
         viewModel.setupViewModel(context);
 
-        if (!MainActivity.productId.equals("")  && !MainActivity.comment.equals("")){
-            viewModel.scanProductID(context, new Product(MainActivity.productId));
+        if (!MainActivity.productId.equals("") && !MainActivity.comment.equals("")) {
+            viewModel.scanProductID(context, fragmentManager, new Product(MainActivity.productId));
         }
 
         binding.scanQr.setOnClickListener(v -> {
@@ -84,7 +84,7 @@ public class HomeViewFragment extends BaseFragment<FragmentHomeBinding> {
 
         binding.search.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(Objects.requireNonNull(binding.qrId.getText()).toString())) {
-                viewModel.scanProductID(context, new Product(binding.qrId.getText().toString().trim()));
+                viewModel.scanProductID(context, fragmentManager, new Product(binding.qrId.getText().toString().trim()));
             } else {
                 Toast.makeText(context, "Nhập mã cần tìm", Toast.LENGTH_SHORT).show();
             }

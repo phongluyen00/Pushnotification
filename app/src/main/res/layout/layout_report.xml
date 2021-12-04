@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="#5B000000"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -21,6 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:maxLines="1"
         android:background="@drawable/botron_button"
         android:textColor="@android:color/white"
         android:hint="Nhập nội dung phản hồi"

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#5BFFF7F7"
+    android:background="#FFFFFF"
     android:layout_gravity="bottom"
     android:orientation="vertical"
     android:padding="10dp">
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:gravity="left"
+        android:textStyle="bold"
         android:text="Thay đổi mật khẩu" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -20,6 +21,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/botron_button"
         android:padding="10dp"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:textColorHint="@android:color/white"
         android:hint="Nhập mật khẩu cũ" />
@@ -29,6 +31,7 @@
         android:layout_marginTop="15dp"
         android:padding="10dp"
         android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         android:layout_width="match_parent"
         android:background="@drawable/botron_button"
         android:layout_height="wrap_content"

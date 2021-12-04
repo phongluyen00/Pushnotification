@@ -8,9 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,10 +17,6 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.StringRequestListener;
-import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
 import com.example.pushnotification.R;
 import com.example.pushnotification.activity.MainActivity;
@@ -35,6 +30,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -67,10 +63,29 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         });
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void setupUI(View view) {
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener((v, event) -> {
+                Utils.hideKeyboard((MainActivity) context);
+                return false;
+            });
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
     @SuppressLint("CheckResult")
     @Override
     protected void initFragment(View view) {
         AndroidNetworking.initialize(context);
+        setupUI(binding.rootView);
+        ((MainActivity) context).setPageTitle("Đóng góp sản phẩm");
         ((MainActivity) context).showBottomNavigation(false);
         binding.setItem(product);
         binding.imgClose.setOnClickListener(v -> {
@@ -126,11 +141,9 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         if (TextUtils.isEmpty(input(binding.productId)) || TextUtils.isEmpty(input(binding.tvName)) ||
                 TextUtils.isEmpty(input(binding.tvLoaisp)) || TextUtils.isEmpty(input(binding.tvDn)) ||
                 TextUtils.isEmpty(input(binding.tvDiachi)) || TextUtils.isEmpty(input(binding.tvPhone)) ||
-                TextUtils.isEmpty(input(binding.tvEmail)) || TextUtils.isEmpty(input(binding.tvMathue)) ||
-                TextUtils.isEmpty((binding.c1.getText().toString())) || TextUtils.isEmpty((binding.c2.getText().toString()))
-                || TextUtils.isEmpty(input(binding.tvGia)) ||
-                TextUtils.isEmpty(input(binding.tvTrongluong)) || TextUtils.isEmpty(input(binding.tVMota)) ||
-                TextUtils.isEmpty(input(binding.tvCreateDate)) || TextUtils.isEmpty(input(binding.createBy)))
+                TextUtils.isEmpty(input(binding.tvMathue)) || TextUtils.isEmpty((binding.c1.getText().toString()))
+                || TextUtils.isEmpty((binding.c2.getText().toString())) || TextUtils.isEmpty(input(binding.tvGia)) ||
+                TextUtils.isEmpty(input(binding.tvTrongluong)) || TextUtils.isEmpty(input(binding.tVMota)))
             return false;
         return true;
     }
@@ -153,7 +166,12 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         viewModel.postContribute(context, fragmentManager, file, stringStringMap());
     }
 
-    private Map<String, String> stringStringMap(){
+    private Map<String, String> stringStringMap() {
+        Date currentTime = Calendar.getInstance().getTime();
+        String date;
+        String pattern = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        date = simpleDateFormat.format(currentTime);
         Map<String, String> map = new HashMap<>();
         map.put("MaSanPham", binding.productId.getText().toString());
         map.put("TenSanPham", binding.tvName.getText().toString());
@@ -161,15 +179,15 @@ public class ContributeFragment extends BaseFragment<ContributeFragmentBinding> 
         map.put("TenDoanhNghiep", binding.tvDn.getText().toString());
         map.put("DiaChi", binding.tvDiachi.getText().toString());
         map.put("SoDienThoai", binding.tvPhone.getText().toString());
-        map.put("Email", binding.tvEmail.getText().toString());
+        map.put("Email", firebaseUser.getEmail());
         map.put("MaSoThue", binding.tvMathue.getText().toString());
         map.put("C1", binding.c1.getText().toString());
         map.put("C2", binding.c2.getText().toString());
         map.put("GiaSanPham", binding.tvGia.getText().toString());
         map.put("TrongLuong", binding.tvTrongluong.getText().toString());
         map.put("MoTa", binding.tVMota.getText().toString());
-        map.put("CreatedDate", binding.tvCreateDate.getText().toString());
-        map.put("CreatedBy", binding.createBy.getText().toString());
+        map.put("CreatedDate", date);
+        map.put("CreatedBy", firebaseUser != null ? firebaseUser.getEmail() : "");
         return map;
     }
 

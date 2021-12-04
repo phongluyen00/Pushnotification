@@ -25,11 +25,12 @@ public class CommentRequest {
     @SerializedName("C1")
     @Expose
     private String c1;
+    private String c2;
 
     public CommentRequest() {
     }
 
-    public CommentRequest(String nguoiDanhGia, String soDiem, String noiDungDonGia, String maSanPham, String statusId, String createdBy, String c1) {
+    public CommentRequest(String nguoiDanhGia, String soDiem, String noiDungDonGia, String maSanPham, String statusId, String createdBy, String c1, String c2) {
         this.nguoiDanhGia = nguoiDanhGia;
         this.soDiem = soDiem;
         this.noiDungDonGia = noiDungDonGia;
@@ -37,6 +38,7 @@ public class CommentRequest {
         this.statusId = statusId;
         this.createdBy = createdBy;
         this.c1 = c1;
+        this.c2 = c2;
     }
 
     public String getNguoiDanhGia() {
@@ -93,5 +95,13 @@ public class CommentRequest {
 
     public void setC1(String c1) {
         this.c1 = c1;
+    }
+
+    public String getC2() {
+        return c2;
+    }
+
+    public void setC2(String c2) {
+        this.c2 = c2;
     }
 }

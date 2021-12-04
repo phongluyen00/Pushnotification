@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,8 +19,25 @@
         android:padding="10dp">
 
         <RelativeLayout
+            android:id="@+id/rootView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/product_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="Mã sản phẩm"
+                android:visibility="gone"
+                android:padding="10dp"
+                android:gravity="left"
+                android:paddingStart="20dp"
+                android:layout_alignTop="@+id/img_close"
+                android:layout_alignBottom="@+id/img_close"
+                android:text="@{item.productId +``}"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_close"
@@ -37,23 +55,10 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_baseline_account_circle_24" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/product_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/botron_button"
-                    android:enabled="false"
-                    android:hint="Mã sản phẩm"
-                    android:paddingStart="20dp"
-                    android:text="@{item.productId +``}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/tv_name"
@@ -63,6 +68,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Tên sản phẩm"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -72,9 +78,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="17dp"
                     android:background="@drawable/botron_button"
                     android:hint="Loại sản phẩm"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -87,6 +94,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Tên doanh nghiệp"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -96,9 +104,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Địa chỉ"
+                    android:padding="10dp"
+                    android:layout_marginTop="19dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -108,21 +117,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="19dp"
                     android:background="@drawable/botron_button"
                     android:hint="Số điện thoại"
-                    android:paddingStart="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/tv_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/botron_button"
-                    android:hint="Email"
+                    android:inputType="number"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -132,36 +131,53 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Mã số thuế"
+                    android:padding="10dp"
+                    android:layout_marginTop="16dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/c1"
+                <LinearLayout
+                    android:layout_marginTop="19dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/botron_button"
-                    android:text="C1"
-                    android:paddingStart="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/c2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/botron_button"
-                    android:text="C2"
-                    android:paddingStart="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/c1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/botron_button"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Ngày sản xuất"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/c2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/botron_button"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Thời hạn sử dụng"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/tv_gia"
@@ -171,9 +187,11 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Gía sản phẩm"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/white"
+                    tools:ignore="RtlSymmetry" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/tv_trongluong"
@@ -183,9 +201,11 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Trọng lượng"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/white"
+                    tools:ignore="RtlSymmetry" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/tV_mota"
@@ -195,30 +215,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/botron_button"
                     android:hint="Mô tả"
-                    android:paddingStart="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/create_by"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/botron_button"
-                    android:hint="Create by"
-                    android:paddingStart="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/tv_create_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/botron_button"
-                    android:hint="Create date"
+                    android:padding="10dp"
                     android:paddingStart="20dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -230,12 +227,14 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/colorDefault"
                     android:background="@drawable/botron_button"
                     android:gravity="center_horizontal"
                     android:text="Đóng góp"
-                    android:textColor="@android:color/white" />
+                    />
             </LinearLayout>
 
         </RelativeLayout>

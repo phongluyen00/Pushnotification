@@ -27,7 +27,7 @@
                 android:background="@drawable/botron_button"
                 android:gravity="center"
                 android:hint="Nhập mã"
-                android:text="123456789"
+                android:text=""
                 android:padding="10dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
@@ -70,7 +70,7 @@
                 android:layout_below="@id/flash"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="Bật flash để quyét tốt hơn"
+                android:text="Bật flash để quét tốt hơn"
                 android:textColor="@android:color/white" />
 
         </RelativeLayout>
