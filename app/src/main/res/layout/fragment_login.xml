@@ -61,6 +61,7 @@
             android:textColorHint="@android:color/white"
             android:layout_below="@id/edt_username"
             android:layout_margin="10dp"
+            android:inputType="textPassword"
             android:text="@{account.password}"
             android:textColor="@android:color/white"
             android:textSize="13sp"

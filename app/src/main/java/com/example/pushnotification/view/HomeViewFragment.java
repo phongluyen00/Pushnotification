@@ -52,7 +52,6 @@ public class HomeViewFragment extends BaseFragment<FragmentHomeBinding> {
         ((MainActivity) context).setPageTitle("QR Code");
         setupUI(binding.rootView);
         viewModel = new ViewModelProvider(this).get(ScanQRViewModel.class);
-        viewModel.setupViewModel(context);
 
         if (!MainActivity.productId.equals("") && !MainActivity.comment.equals("")) {
             viewModel.scanProductID(context, fragmentManager, new Product(MainActivity.productId));
@@ -110,6 +109,8 @@ public class HomeViewFragment extends BaseFragment<FragmentHomeBinding> {
     @Override
     public void onResume() {
         super.onResume();
+        binding.qrId.setText("");
+        viewModel.setupViewModel(context);
         ((MainActivity) context).showBottomNavigation(firebaseUser != null);
         ((MainActivity) context).showViewLoginAndScanQR(firebaseUser != null ? View.GONE : View.VISIBLE);
     }

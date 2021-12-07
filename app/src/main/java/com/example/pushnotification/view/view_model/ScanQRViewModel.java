@@ -96,6 +96,7 @@ public class ScanQRViewModel extends ViewModel {
                             AppCompatTextView submit = dialogView.findViewById(R.id.submit);
                             AppCompatTextView cancel = dialogView.findViewById(R.id.cancel);
                             submit.setOnClickListener(v1 -> {
+                                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                 if (firebaseUser != null) {
                                     new Handler().postDelayed(() -> {
                                         Utils.addFragmentToBackStack(((MainActivity) context).getSupportFragmentManager().beginTransaction()

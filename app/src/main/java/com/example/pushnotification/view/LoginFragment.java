@@ -59,8 +59,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
                 @Override
                 public void onSignInSuccess(FirebaseUser firebaseUser) {
                     mainActivity.progressLoader(false);
-                    Utils.addFragmentToBackStack(fragmentManager.beginTransaction(),
-                            HomeViewFragment.newInstance(context), HomeViewFragment.class.getSimpleName());
+                    Utils.replaceFragment(fragmentManager.beginTransaction(),
+                            HomeViewFragment.newInstance(context));
                 }
             });
         });
